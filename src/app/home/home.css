@@ -1,0 +1,60 @@
+.parent-container{
+    font-size: 1.25rem;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    justify-content: center;
+}
+
+.form-container{
+    display: flex;
+    justify-content: center;
+}
+
+#input-form > div {
+    padding: 1rem;
+}
+
+.dropdown{
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.input-box{
+    padding: 0.5rem;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.submit-button{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 60%;
+    cursor: pointer;
+}
+
+.button :hover{
+    background: blue;
+    color: white;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 1rem 0rem;
+}
+
+.registrar-details{
+    margin-bottom: 1rem;
+}
+
+.heading{
+    font-weight: 600;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.25rem;
+}

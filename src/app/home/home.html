@@ -1,22 +1,73 @@
-<form [formGroup]="ipoForm">
-  <div>
-    <select formControlName="ipoName">
-      <option value="">Select IPO</option>
-      <option *ngFor="let ipo of ipoList" [value]="ipo.companyId">
-        {{ ipo.companyName }}
-      </option>
-    </select>
+<div class="parent-container">
+  <div class="form-container" *ngIf="!resultDisplay">
+    <form [formGroup]="ipoForm" id="input-form">
+      <div>
+        <select formControlName="ipoName" class="dropdown">
+          <option value="" selected>Select IPO</option>
+          <option *ngFor="let ipo of ipoList" [value]="ipo.companyId">
+            {{ ipo.companyName }}
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <input
+          type="text"
+          class="input-box"
+          formControlName="panNumber"
+          placeholder="Enter PAN number"
+        />
+      </div>
+
+      <div class="button">
+        <div (click)="getAllotmentDetails()" class="submit-button">Submit</div>
+      </div>
+    </form>
   </div>
 
-  <div>
-    <input type="text" formControlName="panNumber" placeholder="Enter PAN" />
+  <div *ngIf="resultDisplay" class="result-container">
+    <h2>IPO Allotment results</h2>
+
+    <table class="table">
+      <tr>
+        <td class="heading">Company Name</td>
+        <td>{{ selectedIpo.companyName ?? '' }}</td>
+      </tr>
+      <tr>
+        <td class="heading">Applicant Name</td>
+        <td>{{ allotmentResult.applicantName }}</td>
+      </tr>
+      <tr>
+        <td class="heading">Allotment Status</td>
+        <td>{{ allotmentResult.allotted ? 'Allotted' : 'Not Allotted' }}</td>
+      </tr>
+      <tr>
+        <td class="heading">Shares applied</td>
+        <td>{{ allotmentResult.numberOfSharesApplied }}</td>
+      </tr>
+      <tr>
+        <td class="heading">Shares allotted</td>
+        <td>{{ allotmentResult.numberOfSharesAlloted }}</td>
+      </tr>
+      <tr>
+        <td class="heading">PAN Number</td>
+        <td>{{ ipoForm.value.panNumber }}</td>
+      </tr>
+    </table>
+
+    <div class="registrar-details">
+      <div>
+        <strong>Registrar Name : </strong>
+        <span>{{ selectedIpo.registrarName }}</span>
+      </div>
+      <div>
+        <strong>Registrar Website : </strong>
+        <a href="{{ selectedIpo.registrarWebsite }}">{{ selectedIpo.registrarWebsite }}</a>
+      </div>
+    </div>
+
+    <div class="button">
+      <div (click)="back()" class="submit-button">Check another IPO</div>
+    </div>
   </div>
-
-  <div (click)="getAllotmentDetails()" class="submit-button">
-    Submit
-  </div>
-
-  <pre>{{ ipoForm.value | json }}</pre>
-</form>
-
-<div>{{ ipoList | json }}</div>
+</div>
