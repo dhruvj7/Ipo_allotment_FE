@@ -1,53 +1,79 @@
 <div class="parent-container">
-  <div class="form-container" *ngIf="!resultDisplay">
-    <form [formGroup]="ipoForm" id="input-form">
-      <div>
-        <select formControlName="ipoName" class="dropdown">
+  <div class="form-container" *ngIf="!resultDisplay()">
+    <form [formGroup]="ipoForm" id="input-form" class="card">
+      <h2 class="title">Check IPO Allotment Status</h2>
+
+      <div class="form-group">
+        <label for="ipoName">Select IPO</label>
+        <select id="ipoName" formControlName="ipoName" class="dropdown">
           <option value="" selected>Select IPO</option>
-          <option *ngFor="let ipo of ipoList" [value]="ipo.companyId">
+          <option *ngFor="let ipo of ipoList()" [value]="ipo.companyId">
             {{ ipo.companyName }}
           </option>
         </select>
       </div>
 
-      <div>
+      <div class="form-group">
+        <label for="panNumber">PAN Number</label>
         <input
+          id="panNumber"
           type="text"
           class="input-box"
           formControlName="panNumber"
           placeholder="Enter PAN number"
         />
+        <div *ngIf="errorMessage()" class="error-message">Invalid PAN number</div>
       </div>
 
       <div class="button">
-        <div (click)="getAllotmentDetails()" class="submit-button">Submit</div>
+        <button
+          type="button"
+          (click)="getAllotmentDetails()"
+          class="submit-button"
+          [disabled]="ipoForm.invalid"
+        >
+          Check Allotment
+        </button>
+      </div>
+      <div class="registrar-list">
+        <h4>Registrars covered :</h4>
+        <ul>
+          <li>Bigshare Services Pvt. Ltd.</li>
+          <li>KFin Technologies</li>
+          <li>MUFG Intime India Private Limited (Link Intime India Pvt Ltd)</li>
+        </ul>
       </div>
     </form>
   </div>
 
-  <div *ngIf="resultDisplay" class="result-container">
-    <h2>IPO Allotment results</h2>
+  <div *ngIf="resultDisplay()" class="result-container card">
+    <h2 class="title">IPO Allotment Results</h2>
 
     <table class="table">
       <tr>
         <td class="heading">Company Name</td>
-        <td>{{ selectedIpo.companyName ?? '' }}</td>
+        <td>{{ selectedIpo().companyName ?? '' }}</td>
       </tr>
       <tr>
         <td class="heading">Applicant Name</td>
-        <td>{{ allotmentResult.applicantName }}</td>
+        <td>{{ allotmentResult().applicantName }}</td>
       </tr>
       <tr>
         <td class="heading">Allotment Status</td>
-        <td>{{ allotmentResult.allotted ? 'Allotted' : 'Not Allotted' }}</td>
+        <td
+          [class.allotted]="allotmentResult().allotted"
+          [class.not-allotted]="!allotmentResult().allotted"
+        >
+          {{ allotmentResult().allotted ? 'Allotted 🎉' : 'Not Allotted ❌' }}
+        </td>
       </tr>
       <tr>
-        <td class="heading">Shares applied</td>
-        <td>{{ allotmentResult.numberOfSharesApplied }}</td>
+        <td class="heading">Shares Applied</td>
+        <td>{{ allotmentResult().numberOfSharesApplied }}</td>
       </tr>
       <tr>
-        <td class="heading">Shares allotted</td>
-        <td>{{ allotmentResult.numberOfSharesAlloted }}</td>
+        <td class="heading">Shares Allotted</td>
+        <td>{{ allotmentResult().numberOfSharesAlloted }}</td>
       </tr>
       <tr>
         <td class="heading">PAN Number</td>
@@ -57,17 +83,28 @@
 
     <div class="registrar-details">
       <div>
-        <strong>Registrar Name : </strong>
-        <span>{{ selectedIpo.registrarName }}</span>
+        <strong>Registrar Name: </strong>
+        <span>{{ selectedIpo().registrarName }}</span>
       </div>
       <div>
-        <strong>Registrar Website : </strong>
-        <a href="{{ selectedIpo.registrarWebsite }}">{{ selectedIpo.registrarWebsite }}</a>
+        <strong>Registrar Website: </strong>
+        <a href="{{ selectedIpo().registrarWebsite }}" target="_blank">
+          {{ selectedIpo().registrarWebsite }}
+        </a>
       </div>
     </div>
 
     <div class="button">
-      <div (click)="back()" class="submit-button">Check another IPO</div>
+      <button (click)="back()" class="submit-button secondary">Check Another IPO</button>
     </div>
+  </div>
+</div>
+
+<!-- Error Popup -->
+<div class="error-popup-overlay" *ngIf="showErrorPopup()">
+  <div class="error-popup">
+    <h3>⚠️ Something went wrong</h3>
+    <p>{{ errorMessageText() }}</p>
+    <button class="close-btn" (click)="closeErrorPopup()">Close</button>
   </div>
 </div>
