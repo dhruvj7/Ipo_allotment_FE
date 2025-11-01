@@ -108,3 +108,16 @@
     <button class="close-btn" (click)="closeErrorPopup()">Close</button>
   </div>
 </div>
+
+<!-- loader -->
+<div
+  class="spinner-overlay"
+  role="status"
+  aria-live="polite"
+  aria-busy="true"
+  id="loader"
+  *ngIf="isLoading()"
+>
+  <div class="spinner"></div>
+  <span class="visually-hidden">Loading…</span>
+</div>
