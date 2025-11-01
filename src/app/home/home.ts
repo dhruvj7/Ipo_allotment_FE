@@ -22,6 +22,7 @@ export class Home {
   errorMessage = signal<Boolean>(false);
   showErrorPopup = signal<boolean>(false);
   errorMessageText = signal<string>("");
+  isLoading = signal<boolean>(false);
 
   allotmentResult= signal<ALLOTMENTRESULT>({
     message : "",
@@ -40,14 +41,19 @@ export class Home {
   }
 
   ngOnInit(){
+    this.isLoading.set(true)
     this.ipoService.getAvailableIpos().subscribe({
       next : (ipoList : IPOINTERFACE [])=>{
         this.ipoList.set(ipoList);
       },
       error : (err)=>{
-        console.log(err)
+        this.errorMessageText.set("Too many users at the moment, please try again later.");
+        this.showErrorPopup.set(true);
       },
-      complete : () => {}
+      complete : () => {
+        console.log("hello there")
+        this.isLoading.set(false);
+      }
     });
 
     this.ipoForm.valueChanges.subscribe((data)=>{
@@ -65,6 +71,7 @@ export class Home {
   }
 
   getAllotmentDetails() {
+    this.isLoading.set(true)
 
     const selectedCompanyId = this.ipoForm.value.ipoName;
     const panNumber = this.ipoForm.value.panNumber;
@@ -95,6 +102,9 @@ export class Home {
       error : (err)=>{
         this.errorMessageText.set("Failed to fetch allotment details. Record not found or accessible at the moment.");
         this.showErrorPopup.set(true);
+      },
+      complete :()=>{
+        this.isLoading.set(false);
       }
     })
   }
@@ -103,6 +113,3 @@ export class Home {
     this.resultDisplay.set(false);
   }
 }
-
-//add gif on success and failure
-//add background image
