@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../environment/environment';
+import { environment } from '../../environment/environment';
 import { IPOINTERFACE } from '../Interfaces/ipoInterface';
 import { ALLOTMENTREQUEST } from '../Interfaces/allotmentRequest';
 import { ALLOTMENTRESULT } from '../Interfaces/allotmentResult';
