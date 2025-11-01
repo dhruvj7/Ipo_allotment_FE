@@ -45,14 +45,14 @@ export class Home {
     this.ipoService.getAvailableIpos().subscribe({
       next : (ipoList : IPOINTERFACE [])=>{
         this.ipoList.set(ipoList);
+        this.isLoading.set(false);
       },
       error : (err)=>{
         this.errorMessageText.set("Too many users at the moment, please try again later.");
         this.showErrorPopup.set(true);
+        this.isLoading.set(false);
       },
       complete : () => {
-        console.log("hello there")
-        this.isLoading.set(false);
       }
     });
 
@@ -98,13 +98,14 @@ export class Home {
       next : (res)=>{
         this.allotmentResult.set(res);
         this.resultDisplay.set(true);
+        this.isLoading.set(false);
       },
       error : (err)=>{
         this.errorMessageText.set("Failed to fetch allotment details. Record not found or accessible at the moment.");
         this.showErrorPopup.set(true);
+        this.isLoading.set(false);
       },
       complete :()=>{
-        this.isLoading.set(false);
       }
     })
   }
