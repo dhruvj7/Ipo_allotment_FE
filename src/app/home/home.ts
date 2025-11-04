@@ -44,7 +44,10 @@ export class Home {
     this.isLoading.set(true)
     this.ipoService.getAvailableIpos().subscribe({
       next : (ipoList : IPOINTERFACE [])=>{
-        this.ipoList.set(ipoList);
+        const sortedList = ipoList.sort((a, b) => 
+          a.companyName.localeCompare(b.companyName as string)
+        );
+        this.ipoList.set(sortedList);
         this.isLoading.set(false);
       },
       error : (err)=>{
