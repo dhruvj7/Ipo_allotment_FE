@@ -246,6 +246,26 @@ label {
   border: 0;
 }
 
+/* Privacy Banner */
+.privacy-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f79c42;
+  color: white;
+  text-align: center;
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  z-index: 1500;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+}
+
+.privacy-banner p {
+  margin: 0;
+}
+
 /* animation */
 @keyframes spin {
   to { transform: rotate(360deg); }

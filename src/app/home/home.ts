@@ -100,17 +100,25 @@ export class Home {
     this.ipoService.getAllotmentDetails(payload,this.selectedIpo().registrarId).subscribe({
       next : (res)=>{
         this.allotmentResult.set(res);
+        if(res.numberOfSharesApplied == null){
+          return this.handleError();
+        }
+        console.log("result-",res)
         this.resultDisplay.set(true);
         this.isLoading.set(false);
       },
       error : (err)=>{
-        this.errorMessageText.set("Failed to fetch allotment details. Record not found or accessible at the moment.");
-        this.showErrorPopup.set(true);
-        this.isLoading.set(false);
+        this.handleError();
       },
       complete :()=>{
       }
     })
+  }
+
+  handleError(){
+    this.errorMessageText.set("Failed to fetch allotment details. Record not found or accessible at the moment.");
+    this.showErrorPopup.set(true);
+    this.isLoading.set(false);
   }
 
   back(){
