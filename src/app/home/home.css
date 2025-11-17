@@ -255,7 +255,6 @@ label {
   background: #f79c42;
   color: white;
   text-align: center;
-  padding: 0.7rem 1rem;
   font-size: 0.95rem;
   font-weight: 500;
   z-index: 1500;
@@ -263,7 +262,7 @@ label {
 }
 
 .privacy-banner p {
-  margin: 0;
+  margin: 1rem;
 }
 
 /* animation */
